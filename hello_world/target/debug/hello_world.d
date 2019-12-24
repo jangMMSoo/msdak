@@ -1,1 +1,1 @@
-/home/msdak/Project/msdak/hello_world/target/debug/hello_world: /home/msdak/Project/msdak/hello_world/src/main.rs
+/home/solupia/Projects/RustProject/msdak/hello_world/target/debug/hello_world: /home/solupia/Projects/RustProject/msdak/hello_world/src/main.rs

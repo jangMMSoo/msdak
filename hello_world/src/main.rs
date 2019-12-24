@@ -1,7 +1,5 @@
 fn main() {
     println!("Hello, world!");
-<<<<<<< HEAD
-=======
 
     let condition  = true;
     let number = if condition {
@@ -57,6 +55,7 @@ fn main() {
     println!("x is {}", x);
     println!("y is {}", y);
 
+    println!("x change is {}", x);
     
     let s1 = String::from("hello");
     let s2 = s1; //<- s1의 포인터를 s2 로 넘겨줌, 오너쉽을 넘김
@@ -65,6 +64,11 @@ fn main() {
 
     let s3 = s2.clone(); //비ㅆ비다
     println!("s2 is {}, s3 is {}", s2, s3);
->>>>>>> 0d148d304a46289b359812a4929363c3312a152a
     
+    let length = calculate_length(&s2);
+    
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
 }
