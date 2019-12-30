@@ -1,3 +1,5 @@
+use structs::rect::Rectangle;
+
 struct User {
     username: String,
     email: String,
@@ -15,6 +17,7 @@ fn main() {
         active: true,
         sign_in_count: 1,
     };
+
     println!("{}", user1.email);
 
     let test = build_user(String::from("test@example.com"), String::from("test"));
@@ -34,6 +37,17 @@ fn main() {
     println!(
         "The area of the rectangle is {} square pixels.",
         area(rect1)
+    );
+
+    let rect1 = Rectangle {
+        width: 30,
+        height: 60,
+    };
+    println!("rect1 is {:#?}", rect1);
+
+    println!(
+        "The area of the rectangle1 is {} square pixels.",
+        rect1.area()
     );
 }
 
