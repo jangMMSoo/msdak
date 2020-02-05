@@ -24,7 +24,7 @@
 
 	function addLi() {
 		let answer = count * 2;
-		html = html + '<li>' + count +' * ' + '2 = ' + answer +'</li>';
+		html = html + '<li>' + count +' x ' + '2 = ' + answer +'</li>';
 	}
 </script>
 
@@ -60,7 +60,7 @@
 	Count: {count}
 </button>
 
-<p>{count} * 2 </p>
+<p>{count} x 2 </p>
 <p>= </p><input on:keydown={handleKeyDown} />
 
 <ul contenteditable="true"  bind:innerHTML={html}></ul>
