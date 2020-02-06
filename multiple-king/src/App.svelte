@@ -6,6 +6,7 @@
 	$: doubled = count * 2;
 	$: quadrupled = doubled * 2;
 	let html = '';
+
 	function handleClick() {
 		count += 1;
 	}
@@ -24,7 +25,7 @@
 
 	function addLi() {
 		let answer = count * 2;
-		html = html + '<li>' + count +' x ' + '2 = ' + answer +'</li>';
+		html = '<li><span style="color: red;">' + count + '.</span> '  + count +' x ' + '2 = ' + answer +'</li>' + html;
 	}
 </script>
 
@@ -43,6 +44,49 @@
 		font-weight: 100;
 	}
 
+	.center {
+		margin: auto;
+		width: 50%;
+		/*border: 3px solid green;*/
+		padding: 10px;
+	}
+
+	.left {
+		margin: auto auto auto 0px;
+		width: 65%;
+		/*border: 3px solid green;*/
+		padding: 10px;
+		text-align: left;
+	}
+
+	.font-left {
+		font-size: 128px;
+		margin: 0;
+		text-align: left;
+	}
+
+
+	.answer-left {
+		font-size: 24px;
+		margin: 0;
+		text-align: left;
+	}
+
+	.right {
+		margin: auto 0px auto auto;
+		width: 35%;
+		/*border: 3px solid green;*/
+		padding: 10px;
+	}
+
+	.answer-list {
+		list-style-type: none;
+		text-align: left;
+	}
+
+	.div-line {
+		border-top: 1px solid;
+	}
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
@@ -53,15 +97,26 @@
 <main>
 	<h1>Hello {name}!</h1>
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+
+	<div class="center">
+		<div class="left">
+		<button >Answer Count: {count}</button>
+		<button >Wrong Count: {count}</button>
+		</div>
+	</div>
+
+	<div class="center">
+		<p class="font-left">{count} x 2 </p>
+		<p class="answer-left">= <input on:keydown={handleKeyDown} /></p>
+	</div>
+
+	<div class="div-line">
+		<div class="center">
+			<div class="right">
+				<ul class="answer-list" contenteditable="true"  bind:innerHTML={html}></ul>
+			</div>
+		</div>
+	</div>
 </main>
 
-
-<button on:click={handleClick}>
-	Count: {count}
-</button>
-
-<p>{count} x 2 </p>
-<p>= </p><input on:keydown={handleKeyDown} />
-
-<ul contenteditable="true"  bind:innerHTML={html}></ul>
 
