@@ -1,14 +1,22 @@
 <script>
 	export let name;
 
+	let source = 1;
+	let target = 1;
 	let count = 1;
-	// the `$:` means 're-run whenever these values change'
-	$: doubled = count * 2;
-	$: quadrupled = doubled * 2;
+	let wrongCount = 0;
+	let correctCount = 0;
 	let html = '';
+	let min = 1;
+	let max = 10;
 
-	function handleClick() {
-		count += 1;
+	function initRand() {
+		source = getRandomArbitrary(min, max);
+		target = getRandomArbitrary(min, max);
+	}
+
+	function getRandomArbitrary(min, max) {
+		return Math.floor(Math.random() * (max - min) + min);
 	}
 
 
@@ -17,16 +25,29 @@
 			// Cancel the default action, if needed
 			event.preventDefault();
 			// Trigger the button element with a click
-			count += 1;
+			addLi(this.value);
 			this.value = '';
-			addLi();
+			initRand();
+			count++;
 		}
 	}
 
-	function addLi() {
-		let answer = count * 2;
-		html = '<li><span style="color: red;">' + count + '.</span> '  + count +' x ' + '2 = ' + answer +'</li>' + html;
+	function addLi(answer) {
+		let isAnswer = function(color, target, answer){
+			let isAnswer = color * target === Number(answer);
+			if(isAnswer){
+				correctCount++;
+			}else {
+				wrongCount++;
+			}
+			return isAnswer;
+		};
+		let color = isAnswer(source, target, answer) ? 'blue' : 'red';
+		html = '<li style="color:'+color+'"><span>' + count + '.</span> '  + source +' x ' +  target+ ' = ' + answer +'</li>' + html;
 	}
+
+	initRand();
+
 </script>
 
 <style>
@@ -100,13 +121,13 @@
 
 	<div class="center">
 		<div class="left">
-		<button >Answer Count: {count}</button>
-		<button >Wrong Count: {count}</button>
+		<button >Answer Count: {correctCount}</button>
+		<button >Wrong Count: {wrongCount}</button>
 		</div>
 	</div>
 
 	<div class="center">
-		<p class="font-left">{count} x 2 </p>
+		<p class="font-left">{source} x {target} </p>
 		<p class="answer-left">= <input on:keydown={handleKeyDown} /></p>
 	</div>
 
