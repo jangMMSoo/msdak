@@ -1,14 +1,74 @@
 <script>
+	import Swal from 'sweetalert2'
+
 	export let name;
 
+	const GAME_TIME = 30;
 	let source = 1;
 	let target = 1;
 	let count = 1;
 	let wrongCount = 0;
 	let correctCount = 0;
 	let html = '';
-	let min = 1;
+	let min = 2;
 	let max = 10;
+	let restTimeText ='00, 000';
+	let restTime;
+	function sec2time(timeInSeconds) {
+		let second  = timeInSeconds / 1000;
+		let milli = timeInSeconds % 1000;
+		return Math.floor(second) +', ' +  String(Math.floor(milli)).padStart(3, '0');
+	}
+
+
+	function initGame() {
+		source = 1;
+		target = 1;
+		count = 1;
+		wrongCount = 0;
+		correctCount = 0;
+		html = '';
+		min = 1;
+		max = 10;
+		restTime = GAME_TIME * 1000;
+		restTimeText = sec2time(restTime);
+		let intervalId = undefined;
+
+		function a(){
+			restTime -= 10;
+			restTimeText = sec2time(restTime);
+			if(restTime <= 0){
+				clearInterval(intervalId);
+				Swal.fire({
+					title: 'Are you Retry?',
+					text: 'Your Answer : '+correctCount+', Wrong : ' + wrongCount,
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, Retry!',
+					cancelButtonText: 'No!!',
+					allowEnterKey : false
+				}).then((result) => {
+					if (result.value) {
+						// Swal.fire(
+						// 		'Deleted!',
+						// 		'Your imaginary file has been deleted.',
+						// 		'success'
+						// );
+						initGame();
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						// Swal.fire(
+						// 		'Cancelled',
+						// 		'Your imaginary file is safe :)',
+						// 		'error'
+						// );
+					}
+				});
+
+			}
+		}
+		initRand();
+		intervalId = setInterval(a, 10);
+	}
 
 	function initRand() {
 		source = getRandomArbitrary(min, max);
@@ -46,7 +106,6 @@
 		html = '<li style="color:'+color+'"><span>' + count + '.</span> '  + source +' x ' +  target+ ' = ' + answer +'</li>' + html;
 	}
 
-	initRand();
 
 </script>
 
@@ -117,12 +176,15 @@
 
 <main>
 	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<p>Rest Time : <span >{restTimeText}</span></p>
 
 	<div class="center">
 		<div class="left">
-		<button >Answer Count: {correctCount}</button>
-		<button >Wrong Count: {wrongCount}</button>
+			<button >Answer Count: {correctCount}</button>
+			<button >Wrong Count: {wrongCount}</button>
+		</div>
+		<div class="right">
+			<button on:click={initGame}>Start</button>
 		</div>
 	</div>
 
