@@ -1,19 +1,35 @@
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter,
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+#[derive(Debug)]
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Writer(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl Message {
+    fn call(&self) {
+        //TODO
+        println!("{:#?}", self)
+    }
 }
 
 fn main() {
-    println!("Hello, world!");
+    let home = IpAddr::V4(127, 0, 0, 1);
+    let loopback = IpAddr::V6(String::from("::1"));
+
+    let m = Message::Writer(String::from("hello"));
+
+    m.call();
 }
 
-fn value_in_cents(coin: Coin) -> u8 {
-    match coin {
-        Coin::Penny => 1,
-        Coin::Nickel => 5,
-        Coin::Dime => 10,
-        Coin::Quarter => 25,
-    }
-}
+fn route(ip_kind: IpAddrKind) {}
